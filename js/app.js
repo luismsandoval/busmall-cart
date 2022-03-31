@@ -16,12 +16,12 @@ const Cart = function(items) {
 };
 
 Cart.prototype.addItem = function(product, quantity) {
-  new CartItem(product, quantity);
-  Cart.items.push(this);
+  let newItem = new CartItem(product, quantity);
+  this.items.push(newItem);
 };
 
 Cart.prototype.saveToLocalStorage = function() {
-  localStorage.setObject('cart', Cart.items);
+  localStorage.setObject('cart', this.items);
 };
 
 Cart.prototype.removeItem = function(item) {
