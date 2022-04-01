@@ -14,25 +14,31 @@ const Cart = function(items) {
   // this.items is an array of CartItem instances.
   this.items = items;
 };
-
 Cart.prototype.addItem = function(product, quantity) {
   let newItem = new CartItem(product, quantity);
   this.items.push(newItem);
 };
 
 Cart.prototype.saveToLocalStorage = function() {
-  localStorage.setObject('cart', this.items);
+  console.log(cart.items);
+  localStorage.setObject('cart', cart.items);
 };
+Cart.prototype.loadFromLocalStorage = function() {
+  const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+  console.log(cartItems, 'loaded');
+  cart = new Cart(cartItems);
+}
 
 Cart.prototype.removeItem = function(item) {
   // DONE: Fill in this instance method to remove one item from the cart.
   // Note: You will have to decide what kind of parameter to pass in here!
-  for (let i = 0; i < Cart.items.length; i++) {
-    if (Cart.items[i].product === item) {
-      Cart.items.splice(i, 1);
+  this.loadFromLocalStorage();
+  for (let i = 0; i < cart.items.length; i++) {
+    if (cart.items[i].product === item) {
+      cart.items.splice(i, 1);
     }
   }
-  Cart.saveToLocalStorage();
+  this.saveToLocalStorage();
 };
 
 const CartItem = function(product, quantity) {

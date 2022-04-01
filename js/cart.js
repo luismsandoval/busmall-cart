@@ -5,7 +5,7 @@
 const table = document.getElementById('cart');
 table.addEventListener('click', removeItemFromCart);
 let cart;
-let tbody = findFirstDescendant('cart', 'tbody');
+let tBody = findFirstDescendant('cart', 'tBody');
 
 function findFirstDescendant(parent, tagname){
   parent = document.getElementById(parent);
@@ -19,6 +19,7 @@ function findFirstDescendant(parent, tagname){
 
 function loadCart() {
   const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+  console.log(cartItems);
   cart = new Cart(cartItems);
 }
 
@@ -29,31 +30,32 @@ function renderCart() {
   showCart();
 }
 
-// DONE: Remove all of the rows (tr) in the cart table (tbody)
+// DONE: Remove all of the rows (tr) in the cart table (tBody)
 function clearCart() {
-  while(tbody.firstChild){
-    tbody.removeChild(tbody.firstChild);
-  }
+  while(tBody.firstChild){
+    tBody.removeChild(tBody.firstChild);
+  } // won't work till tds are placed in correct tBody
 }
 
-// DONE: Fill in the <tr>'s under the <tbody> for each item in the cart
+// DONE: Fill in the <tr>'s under the <tBody> for each item in the cart
 function showCart() {
   // DONE: Find the table body
   // DONE: Iterate over the items in the cart
   // DONE: Create a TR
   // DONE: Create a TD for the delete link, quantity,  and the item
   // DONE: Add the TR to the TBODY and each of the TD's to the TR
-  for(let i = 0; i < cart.length; i++){
+
+  for(let i = 0; i < cart.items.length; i++){
     let tRow = document.createElement('tr');
-    table.appendChild(tRow);
+    tBody.appendChild(tRow);
     let tDelete = document.createElement('td');
-    tDelete.id = `${Cart.items[i].product}`;
+    tDelete.id = `${cart.items[i].product}`;
     let tQuantity = document.createElement('td');
     let tItem = document.createElement('td');
     tDelete.textContent = 'Delete';
     tDelete.addEventListener('click', removeItemFromCart);
-    tQuantity.textContent = `${Cart.items[i].quantity}`;
-    tItem.textContent = `${Cart.items[i].product}`;
+    tQuantity.textContent = `${cart.items[i].quantity}`;
+    tItem.textContent = `${cart.items[i].product}`;
     tRow.appendChild(tItem);
     tRow.appendChild(tQuantity);
     tRow.appendChild(tDelete);
@@ -62,7 +64,8 @@ function showCart() {
 
 function removeItemFromCart(event) {
 let deleteMe = event.target.id;
-Cart.removeItem(deleteMe);
+console.log(event);
+Cart.prototype.removeItem(deleteMe);
 renderCart();
   // DONE: When a delete link is clicked, use cart.removeItem to remove the correct item
   // DONE: Save the cart back to local storage
