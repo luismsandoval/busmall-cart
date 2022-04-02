@@ -57,7 +57,12 @@ function updateCartPreview() {
   // TODO: Get the item and quantity from the form
 
   // TODO: Add a new element to the cartContents div with that information
-
+let item = document.getElementById('items').value;
+let quantity = document.getElementById('quantity').value;
+let cartContents = document.createElement('cartContents');
+let cartPreview = document.createElement('cartPreview');
+cartPreview.textContent = `Items chosen: ${item}, qty: ${quantity}`
+cartContents.appendChild(cartPreview);
 }
 
 // Set up the "submit" event listener on the form.
