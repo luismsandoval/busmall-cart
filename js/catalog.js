@@ -3,7 +3,7 @@
 'use strict';
 
 // Set up an empty cart for use on this page.
-const cart = new Cart([]);
+const cart = new Cart(localStorage.getObject('cart') ?? []);
 
 // On screen load, we call this method to put all of the busmall options
 // (the things in the Product.allProducts array) into the drop down list.
@@ -63,6 +63,12 @@ let cartContents = document.createElement('cartContents');
 let cartPreview = document.createElement('cartPreview');
 cartPreview.textContent = `Items chosen: ${item}, qty: ${quantity}`
 cartContents.appendChild(cartPreview);
+
+// let ul = document.createElement('ul');
+// cartContents.appendChild(ul);
+// let li = document.createElement('li');
+// li.textContent = `Items chosen: ${item}, qty: ${quantity}`;
+// ul.appendChild(li);
 }
 
 // Set up the "submit" event listener on the form.
